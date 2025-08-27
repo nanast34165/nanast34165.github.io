@@ -1,32 +1,118 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>カルーセルウェブサイト</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="carousel-container">
-      <div class="carousel-slide">
-        <img
-          src="https://via.placeholder.com/800x400/FF5733/FFFFFF?text=Slide+1"
-          alt="Slide 1"
-        />
-        <img
-          src="https://via.placeholder.com/800x400/33FF57/FFFFFF?text=Slide+2"
-          alt="Slide 2"
-        />
-        <img
-          src="https://via.placeholder.com/800x400/5733FF/FFFFFF?text=Slide+3"
-          alt="Slide 3"
-        />
-      </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOBILE SERVICE - モバイルサービス</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">MOBILE SERVICE</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#home">ホーム</a></li>
+                    <li><a href="#plans">料金プラン</a></li>
+                    <li><a href="#devices">端末</a></li>
+                    <li><a href="#support">サポート</a></li>
+                </ul>
+            </nav>
+            <button class="cta-button">お申し込み</button>
+        </div>
+    </header>
 
-      <button class="prev-button">❮</button>
-      <button class="next-button">❯</button>
-    </div>
+    <!-- メインコンテンツ -->
+    <main class="main-container">
+        <section class="carousel-section">
+            <div class="carousel-container">
+                <!-- 特別オファーバッジ -->
+                <div class="special-offer">2ヶ月無料！</div>
+                
+                <!-- カルーセルラッパー -->
+                <div class="carousel-wrapper" id="carouselWrapper">
+                    <!-- スライド1 -->
+                    <div class="carousel-slide slide-1">
+                        <div class="slide-content">
+                            <div class="discount-tag">最大50%OFF</div>
+                            <h2 class="slide-title">Redmi 12 5G</h2>
+                            <p class="slide-subtitle">最新5G対応スマートフォン</p>
+                            <div class="slide-price">1,300円/月</div>
+                            <div class="slide-features">
+                                <span class="feature-tag">5G対応</span>
+                                <span class="feature-tag">大容量バッテリー</span>
+                                <span class="feature-tag">高性能カメラ</span>
+                                <span class="feature-tag">防水対応</span>
+                            </div>
+                            <button class="slide-cta">詳細を見る</button>
+                        </div>
+                        <div class="slide-image">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">Redmi 12 5G</div>
+                            </div>
+                        </div>
+                    </div>
 
-    <script src="JavaScript.js"></script>
-  </body>
+                    <!-- スライド2 -->
+                    <div class="carousel-slide slide-2">
+                        <div class="slide-content">
+                            <div class="discount-tag">エンタメフリー</div>
+                            <h2 class="slide-title">動画・音楽</h2>
+                            <p class="slide-subtitle">データ消費ゼロでお楽しみ！</p>
+                            <div class="slide-price">2ヶ月無料</div>
+                            <div class="slide-features">
+                                <span class="feature-tag">YouTube</span>
+                                <span class="feature-tag">Netflix</span>
+                                <span class="feature-tag">Spotify</span>
+                                <span class="feature-tag">Instagram</span>
+                            </div>
+                            <button class="slide-cta">今すぐ申込</button>
+                        </div>
+                        <div class="slide-image">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">エンタメ<br>フリー</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- スライド3 -->
+                    <div class="carousel-slide slide-3">
+                        <div class="slide-content">
+                            <div class="discount-tag">高品質カメラ</div>
+                            <h2 class="slide-title">AQUOS sense8</h2>
+                            <p class="slide-subtitle">美しい写真を撮影しよう</p>
+                            <div class="slide-price">2,070円/月</div>
+                            <div class="slide-features">
+                                <span class="feature-tag">AI カメラ</span>
+                                <span class="feature-tag">長時間バッテリー</span>
+                                <span class="feature-tag">おサイフケータイ</span>
+                                <span class="feature-tag">防水・防塵</span>
+                            </div>
+                            <button class="slide-cta">お得に購入</button>
+                        </div>
+                        <div class="slide-image">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">AQUOS<br>sense8</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ナビゲーションドット -->
+                <div class="carousel-nav" id="carouselNav">
+                    <span class="nav-dot active" data-slide="0"></span>
+                    <span class="nav-dot" data-slide="1"></span>
+                    <span class="nav-dot" data-slide="2"></span>
+                </div>
+
+                <!-- 矢印ナビゲーション -->
+                <button class="carousel-arrow arrow-prev" id="prevBtn">‹</button>
+                <button class="carousel-arrow arrow-next" id="nextBtn">›</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
 </html>
