@@ -72,6 +72,18 @@
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
+        /*headバナーのログインボタンの配置処理*/
+        .cta-button {
+            background: #ff6b35;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
         .cta-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(255,107,53,0.4);
@@ -401,7 +413,7 @@
                     <li><a href="#support">サポート</a></li>
                 </ul>
             </nav>
-            <button class="cta-button">ログイン</button>
+            <button class="cta-button lg">ログイン</button>
             <button class="cta-button">お申し込み</button>
         </div>
     </header>
@@ -687,7 +699,7 @@
         });
 
         // その他のインタラクション
-        document.querySelectorAll('.slide-cta, .cta-button').forEach(button => {
+        document.querySelectorAll('.slide-cta, .cta-button,.cta-button lg').forEach(button => {
             button.addEventListener('click', () => {
                 // クリック効果のアニメーション
                 button.style.transform = 'scale(0.95)';
