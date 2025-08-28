@@ -194,6 +194,19 @@
             box-shadow: 0 5px 15px rgba(255,107,53,0.4);
         }
 
+        .slidelg-cta {
+            background: #ff6b35;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255,107,53,0.4);
+        }
+
         .slide-cta:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(255,107,53,0.6);
@@ -414,7 +427,7 @@
                     <li><a href="#support">サポート</a></li>
                 </ul>
             </nav>
-            <button class="slide-cta">ログイン</button>
+            <button class="cta-button">ログイン</button>
             <button class="cta-button">お申し込み</button>
         </div>
     </header>
@@ -700,7 +713,7 @@
         });
 
         // その他のインタラクション
-        document.querySelectorAll('.slide-cta, .cta-button').forEach(button => {
+        document.querySelectorAll('.slide-cta, .cta-button, .slidelg-cta').forEach(button => {
             button.addEventListener('click', () => {
                 // クリック効果のアニメーション
                 button.style.transform = 'scale(0.95)';
