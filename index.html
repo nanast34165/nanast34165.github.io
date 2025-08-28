@@ -78,9 +78,6 @@
             
         }
 
-        /*headバナーのログインボタンの配置処理*/
-        
-
         .cta-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(255,107,53,0.4);
@@ -178,19 +175,6 @@
         }
 
         .slide-cta {
-            background: #ff6b35;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(255,107,53,0.4);
-        }
-
-        .slidelg-cta {
             background: #ff6b35;
             color: white;
             padding: 15px 30px;
@@ -314,7 +298,71 @@
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         }
 
-        /* レスポンシブ */
+        /* フッターコンテナの修正 */
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 50px;
+        }
+
+        /* 左側メニュー */
+        .footer-left {
+            flex: 0 0 300px;
+        }
+
+        .menu-wrapper ul {
+            list-style-type: none;
+            font-size: 24px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-wrapper ul li {
+            padding: 10px 0;
+            border-bottom: solid 2px #eee;
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* 右側お知らせ */
+        .footer-right {
+            flex: 1;
+        }
+
+        .oshirase-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: solid 2px #eee;
+            color: #333;
+        }
+
+        .oshirase-title h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .oshirase-list ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .oshirase-list li {
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            line-height: 1.5;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* レスポンシブ対応 */
         @media (max-width: 768px) {
             .header-content {
                 padding: 0 15px;
@@ -371,6 +419,20 @@
             .arrow-next {
                 right: 10px;
             }
+
+            /* モバイル時のフッターレイアウト */
+            .footer-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .footer-left {
+                flex: none;
+            }
+
+            .menu-wrapper ul {
+                font-size: 20px;
+            }
         }
 
         /* アニメーション */
@@ -408,60 +470,6 @@
             display: inline-block;
             margin-bottom: 40px;
         }
-
-        .menu {
-          color: black;
-          margin: 15px 0px;
-          max-width: 100%;
-          margin-bottom: 100px;
-          float: left;
-        }
-
-        .menu-wrapper {
-          margin-bottom: 0px;
-        }
-
-        .menu-wrapper ul {
-          list-style-type: none;
-          font-size: 30px;
-          position: relative;
-          margin-left: 400px;
-          width: 50%;
-        }
-
-        .menu-wrapper ul li {
-          padding: 7px;
-          border-bottom: solid 2px #eee;
-          display: block;
-          width: 200px;
-          margin-bottom: 10px;
-        }
-
-
-        .oshirase {
-          
-         width: 100%;
-
-        }
-
-        .oshirase-wrapper {
-          position: relative;
-          display: inline-block;
-          bottom:0px;
-          right: 0px;
-          top:0px;
-          float: left;
-
-        }
-
-        .oshirase-title {
-          padding-bottom: 3px;
-          border-bottom: solid 2px #eee;
-          float: none;
-        }
-
-        
-
     </style>
 </head>
 <body>
@@ -573,44 +581,38 @@
         </section>
     </main> 
 
-    <!--カラーセル機能の左下に配置する項目リスト-->
-    <div class="menu">
-      <div class="menu-wrapper">
-       <div class="mune-list">
-         <ul>
-          <li>店舗</li>
-          <li>料金プラン</li>
-          <li>端末</li>
-          <li>サポート</li>
-         </ul>
-       </div>
-      </div>
+    <!-- フッターセクション（修正された構造） -->
+    <footer>
+        <div class="footer-container">
+            <!-- 左側：メニュー項目 -->
+            <div class="footer-left">
+                <div class="menu-wrapper">
+                    <ul>
+                        <li>店舗</li>
+                        <li>料金プラン</li>
+                        <li>端末</li>
+                        <li>サポート</li>
+                    </ul>
+                </div>
+            </div>
 
-      <div class="oshirase-wrapper">
-        <div class="oshirase-title"><h3>お知らせ</h3></div>
-        <br>
-        <div class="oshirase-contents">
-          <div class="oshirase-list">
-            <ul>
-              <li>・〇年〇月〇日  〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
-              <br>
-              <li>・〇年〇月〇日  〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
-              <br>
-              <li>・〇年〇月〇日  〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
-            </ul>
-          </div>
+            <!-- 右側：お知らせ -->
+            <div class="footer-right">
+                <div class="oshirase-title">
+                    <h3>お知らせ</h3>
+                </div>
+                <div class="oshirase-contents">
+                    <div class="oshirase-list">
+                        <ul>
+                            <li>・〇年〇月〇日 〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
+                            <li>・〇年〇月〇日 〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
+                            <li>・〇年〇月〇日 〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-    </div>
-    
-
-    <!--カラーセル機能の右下に配置するお知らせボード-->
-    <div class="oshirase">
-      
-    </div>
-    
-
+    </footer>
 
     <script>
         class Carousel {
