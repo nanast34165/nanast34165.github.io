@@ -73,7 +73,7 @@
         }
 
         /*headバナーのログインボタンの配置処理*/
-        .cta-button lg {
+        .ctalg-button {
             background: #ff6b35;
             color: white;
             padding: 10px 20px;
@@ -414,7 +414,7 @@
                     <li><a href="#support">サポート</a></li>
                 </ul>
             </nav>
-            <button class="cta-button lg">ログイン</button>
+            <button class=".slide-cta">ログイン</button>
             <button class="cta-button">お申し込み</button>
         </div>
     </header>
@@ -700,7 +700,7 @@
         });
 
         // その他のインタラクション
-        document.querySelectorAll('.slide-cta, .cta-button,.cta-button lg').forEach(button => {
+        document.querySelectorAll('.slide-cta, .cta-button').forEach(button => {
             button.addEventListener('click', () => {
                 // クリック効果のアニメーション
                 button.style.transform = 'scale(0.95)';
