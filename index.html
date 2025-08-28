@@ -70,7 +70,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
-            position: absolute;
+            position: fixed;
             
         }
 
@@ -706,7 +706,7 @@
         });
 
         // その他のインタラクション
-        document.querySelectorAll('.slide-cta, .cta-button, .slidelg-cta').forEach(button => {
+        document.querySelectorAll('.slide-cta, .cta-button').forEach(button => {
             button.addEventListener('click', () => {
                 // クリック効果のアニメーション
                 button.style.transform = 'scale(0.95)';
