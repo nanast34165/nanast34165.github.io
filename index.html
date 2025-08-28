@@ -39,43 +39,28 @@
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             letter-spacing: 1px;
+            white-space: nowrap;
         }
 
-        .nav-menu {
+        .header-buttons {
             display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.3s;
-        }
-
-        .nav-menu a:hover {
-            opacity: 0.8;
-        }
-
-        .login {
-          margin-left: 450px;
+            gap: 15px;
+            align-items: center;
         }
 
         .cta-button {
             background: #ff6b35;
             color: white;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            
+            font-size: 14px;
         }
 
         .cta-button:hover {
@@ -332,15 +317,13 @@
         /* 右側お知らせ */
         .footer-right {
             flex: 1;
-            margin-left: 150px;
         }
 
         .oshirase-title {
             font-size: 20px;
             margin-bottom: 15px;
-            margin-left: 200px;
             padding-bottom: 10px;
-            /*border-bottom: solid 2px #eee; */
+            border-bottom: solid 2px #eee;
             color: #333;
         }
 
@@ -370,8 +353,17 @@
                 padding: 0 15px;
             }
 
-            .nav-menu {
-                display: none;
+            .logo {
+                font-size: 16px;
+            }
+
+            .header-buttons {
+                gap: 10px;
+            }
+
+            .cta-button {
+                padding: 6px 12px;
+                font-size: 12px;
             }
 
             .carousel-slide {
@@ -480,17 +472,10 @@
         <div class="header-content">
             <div class="logo">MOBILE SERVICE</div>
             
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="#home">ホーム</a></li>
-                    <li><a href="#plans">料金プラン</a></li>
-                    <li><a href="#devices">端末</a></li>
-                    <li><a href="#support">サポート</a></li>
-                </ul>
-            </nav>  
-            
-            <div class="login"><button class="cta-button">ログイン</button></div>
-            <button class="cta-button">お申し込み</button>
+            <div class="header-buttons">
+                <button class="cta-button">ログイン</button>
+                <button class="cta-button">お申し込み</button>
+            </div>
         </div>
     </header>
 
@@ -591,7 +576,7 @@
             <div class="footer-left">
                 <div class="menu-wrapper">
                     <ul>
-                        <li>店舗一覧</li>
+                        <li>店舗</li>
                         <li>料金プラン</li>
                         <li>端末</li>
                         <li>サポート</li>
@@ -607,9 +592,9 @@
                 <div class="oshirase-contents">
                     <div class="oshirase-list">
                         <ul>
-                            <li>・〇年〇月〇日 〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
-                            <li>・〇年〇月〇日 〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
-                            <li>・〇年〇月〇日 〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
+                            <li>・〇年〇月〇日 〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
+                            <li>・〇年〇月〇日 〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
+                            <li>・〇年〇月〇日 〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</li>
                         </ul>
                     </div>
                 </div>
