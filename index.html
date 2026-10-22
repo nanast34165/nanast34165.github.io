@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITリモート・出張対応 予約スケジュール</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-navy: #0F2A4A;
+            --secondary-blue: #0066CC;
+            --accent-orange: #FF6B00;
+            --bg-gray: #F4F6F9;
+            --card-bg: #FFFFFF;
+            --border-color: #E2E8F0;
+            --text-main: #1E293B;
+            --text-sub: #64748B;
+            --font-main: 'Noto Sans JP', sans-serif;
+            --font-en: 'Plus Jakarta Sans', sans-serif;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-gray);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--primary-navy);
+            color: #fff;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: var(--font-en);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .admin-toggle-btn {
+            background: var(--accent-orange);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
+        }
+
+        .admin-toggle-btn:hover { opacity: 0.9; }
+
+        /* BANNER */
+        .page-banner {
+            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notice-box {
+            background: #EFF6FF;
+            border-left: 4px solid var(--secondary-blue);
+            padding: 10px 16px;
+            border-radius: 4px;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        /* VIEW CONTROLS */
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .view-switch {
+            display: flex;
+            background: #E2E8F0;
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .view-btn {
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background: #fff;
+            color: var(--primary-navy);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .legend-list {
+            display: flex;
+            gap: 12px;
+            font-size: 0.75rem;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .bg-free { background: #16A34A; }
+        .bg-full { background: #DC2626; }
+        .bg-closed { background: #64748B; }
+
+        /* MONTHLY CALENDAR VIEW */
+        .month-view {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .month-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            font-family: var(--font-en);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: var(--border-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .cal-head {
+            background: var(--primary-navy);
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .cal-head.sun { background: #991B1B; }
+        .cal-head.sat { background: #1E40AF; }
+
+        .cal-day {
+            background: #fff;
+            min-height: 96px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .cal-day:hover { background: #F1F5F9; }
+
+        .cal-day.empty {
+            background: #F8FAFC;
+            cursor: default;
+        }
+
+        .cal-day.disabled {
+            background: #F8FAFC;
+            color: #94A3B8;
+            cursor: default;
+        }
+
+        .date-num {
+            font-size: 0.9rem;
+            font-weight: bold;
+            font-family: var(--font-en);
+        }
+
+        .status-tag {
+            font-size: 0.7rem;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .tag-available { background: #DCFCE7; color: #166534; }
+        .tag-full      { background: #FEE2E2; color: #991B1B; }
+        .tag-closed    { background: #F1F5F9; color: #64748B; }
+        .tag-past      { background: #E2E8F0; color: #64748B; }
+
+        /* DAILY TIMETABLE VIEW */
+        .timetable-view {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            display: none;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .selected-date-header {
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--primary-navy);
+            margin-bottom: 24px;
+        }
+
+        .selected-date-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+        }
+
+        .area-container {
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .area-header {
+            background: var(--primary-navy);
+            color: #fff;
+            padding: 12px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
+
+        .slot-vertical-list {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .time-slot-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--secondary-blue);
+            border-radius: 6px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .time-slot-card.admin-clickable {
+            cursor: pointer;
+        }
+
+        .time-slot-card.admin-clickable:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .time-slot-card.reserved {
+            background: #E2E8F0;
+            border-color: #CBD5E1;
+            border-left-color: #64748B;
+            color: #64748B;
+            opacity: 0.85;
+        }
+
+        .slot-time-label {
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: var(--font-en);
+            min-width: 90px;
+        }
+
+        .slot-type-label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            flex-grow: 1;
+            padding: 0 16px;
+        }
+
+        .slot-status-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: #fff;
+            border-radius: 8px;
+            max-width: 480px;
+            width: 100%;
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 1.2rem;
+            color: var(--text-sub);
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-navy);
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--secondary-blue);
+            color: #fff;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .cal-day { min-height: 70px; padding: 4px; }
+            .time-slot-card { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container header-inner">
+            <div class="logo">
+                IT SUPPORT HIMEJI
+                <span>リモート・出張対応予定表</span>
+            </div>
+            <button class="admin-toggle-btn" id="adminBtn" onclick="toggleAdminMode()">
+                <i class="fa-solid fa-lock"></i> <span id="adminText">管理者モード OFF</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- BANNER -->
+    <div class="page-banner">
+        <div class="container">
+            <h1 class="page-title"><i class="fa-regular fa-calendar-days"></i> ITリモート・出張対応 予定カレンダー</h1>
+            <div class="notice-box">
+                <i class="fa-solid fa-circle-info"></i> 月間カレンダーの日付を選択することで、該当日の時間帯別スケジュールをご確認いただけます。（土日および過去の平日は選択不可となります）
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container" style="padding-bottom: 60px;">
+
+        <!-- CONTROLS BAR -->
+        <div class="controls-bar">
+            <div class="view-switch">
+                <button class="view-btn active" id="btnViewMonth" onclick="switchView('month')"><i class="fa-solid fa-calendar"></i> 月間カレンダー</button>
+                <button class="view-btn" id="btnViewTimetable" onclick="switchView('timetable')"><i class="fa-solid fa-clock"></i> 日別タイムスケジュール</button>
+            </div>
+
+            <div class="legend-list">
+                <div class="legend-item"><span class="badge bg-free">受付中</span> 予約可能</div>
+                <div class="legend-item"><span class="badge bg-full">満員/不可</span> 予約不可（全枠埋まり等）</div>
+                <div class="legend-item"><span class="badge bg-closed">休業/過去</span> 土日・過ぎた日</div>
+            </div>
+        </div>
+
+        <!-- MONTH VIEW -->
+        <div class="month-view" id="monthView">
+            <div class="month-header">
+                <button onclick="alert('前月へ移動します（デモ）')"><i class="fa-solid fa-chevron-left"></i> 前月</button>
+                <div class="month-title">2026年 10月</div>
+                <button onclick="alert('翌月へ移動します（デモ）')">翌月 <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- JS動的生成 -->
+            </div>
+        </div>
+
+        <!-- DAILY TIMETABLE VIEW -->
+        <div class="timetable-view" id="timetableView">
+            <div class="selected-date-header">
+                <div class="selected-date-title" id="selectedDateTitle">
+                    2026年10月2日 (金)
+                </div>
+            </div>
+
+            <div class="area-container">
+                <div class="area-header">
+                    ITリモート・出張対応予定表
+                </div>
+                <div class="slot-vertical-list" id="verticalSlotList">
+                    <!-- JS動的生成 -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ADMIN EDIT MODAL -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModalDirect()"><i class="fa-solid fa-xmark"></i></button>
+
+            <div id="modalFormContent">
+                <h3 class="modal-title">【管理者】スケジュール編集</h3>
+                
+                <div class="form-group">
+                    <label>日時</label>
+                    <input type="text" id="formDateTime" readonly style="background:#F1F5F9; font-weight:bold;">
+                </div>
+
+                <div class="form-group">
+                    <label>対応種別</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="serviceType" value="リモート対応" checked> リモート対応
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="serviceType" value="訪問対応"> 訪問対応
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="serviceType" value="予約不可"> 予約不可
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 12px; border-top: 1px dashed var(--border-color); padding-top: 12px;">
+                    <label>ステータス手動変更</label>
+                    <select id="adminStatusSelect">
+                        <option value="available">予約可能 (空き)</option>
+                        <option value="reserved">予約済み (グレーアウト)</option>
+                        <option value="unavailable">予約不可 (グレーアウト)</option>
+                    </select>
+                </div>
+
+                <button class="btn-submit" onclick="handleFormSubmit()">更新を保存する</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        const defaultTimes = ["9:00～", "10:00～", "11:00～", "14:00～", "15:00～", "16:00～", "17:00～"];
+        const dayNames = ['日', '月', '火', '水', '木', '金', '土'];
+
+        let scheduleData = {
+            "2026-10-02": {
+                "9:00～": { reserved: false, type: "リモート対応" },
+                "10:00～": { reserved: true, type: "訪問対応" },
+                "11:00～": { reserved: false, type: "リモート対応" },
+                "14:00～": { reserved: false, type: "訪問対応" },
+                "15:00～": { reserved: false, type: "リモート対応" },
+                "16:00～": { reserved: false, type: "リモート対応" },
+                "17:00～": { reserved: true, type: "訪問対応" }
+            }
+        };
+
+        let selectedDate = "2026-10-02";
+        let selectedTime = "9:00～";
+        let currentView = "month";
+        let isAdmin = false;
+
+        // アジア/東京 基準での現在日付（YYYY-MM-DD）を取得する関数
+        function getAsiaTokyoToday() {
+            const options = { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit' };
+            const formatter = new Intl.DateTimeFormat('en-CA', options); // en-CA gives YYYY-MM-DD format
+            return formatter.format(new Date());
+        }
+
+        function ensureDateData(dateStr) {
+            if (!scheduleData[dateStr]) {
+                scheduleData[dateStr] = {};
+                defaultTimes.forEach(t => {
+                    scheduleData[dateStr][t] = { reserved: false, type: "リモート対応" };
+                });
+            }
+        }
+
+        function toggleAdminMode() {
+            isAdmin = !isAdmin;
+            const btnText = document.getElementById('adminText');
+            if (isAdmin) {
+                btnText.textContent = '管理者モード ON';
+                document.getElementById('adminBtn').style.background = '#059669';
+            } else {
+                btnText.textContent = '管理者モード OFF';
+                document.getElementById('adminBtn').style.background = 'var(--accent-orange)';
+            }
+            if (currentView === 'timetable') renderDayTimetable();
+            renderCalendar(); // 管理者モード切替時にカレンダーの表示制限を再評価
+        }
+
+        function switchView(view) {
+            currentView = view;
+            const btnMonth = document.getElementById('btnViewMonth');
+            const btnTime = document.getElementById('btnViewTimetable');
+            const vMonth = document.getElementById('monthView');
+            const vTime = document.getElementById('timetableView');
+
+            if (view === 'month') {
+                btnMonth.classList.add('active');
+                btnTime.classList.remove('active');
+                vMonth.style.display = 'block';
+                vTime.style.display = 'none';
+                renderCalendar();
+            } else {
+                btnTime.classList.add('active');
+                btnMonth.classList.remove('active');
+                vTime.style.display = 'block';
+                vMonth.style.display = 'none';
+                renderDayTimetable();
+            }
+        }
+
+        function onCalDayClick(dateStr, isDisabled) {
+            // 管理者モードOFFの場合、無効化された日付（土日・過去の日）はクリックしても何も起こさない
+            if (isDisabled && !isAdmin) {
+                return;
+            }
+            selectedDate = dateStr;
+            ensureDateData(selectedDate);
+            switchView('timetable');
+        }
+
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = `
+                <div class="cal-head sun">日</div>
+                <div class="cal-head">月</div>
+                <div class="cal-head">火</div>
+                <div class="cal-head">水</div>
+                <div class="cal-head">木</div>
+                <div class="cal-head">金</div>
+                <div class="cal-head sat">土</div>
+            `;
+
+            const todayStr = getAsiaTokyoToday(); // Asia/Tokyo 基準の今日
+
+            // 2026年10月1日は木曜日 (index 4)
+            const firstDayIndex = 4;
+            for (let i = 0; i < firstDayIndex; i++) {
+                grid.innerHTML += `<div class="cal-day empty"></div>`;
+            }
+
+            for (let i = 1; i <= 31; i++) {
+                const dateStr = `2026-10-${i < 10 ? '0' + i : i}`;
+                ensureDateData(dateStr);
+
+                const dayOfWeek = (firstDayIndex + (i - 1)) % 7;
+                const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6); // 土日
+
+                // 過去の日付判定 (Asia/Tokyo 基準で今日より前か)
+                const isPast = (dateStr < todayStr);
+
+                // 一般ユーザー視点での無効判定（土日、または管理者以外で過去の日付の場合）
+                const isDisabledForUser = isWeekend || (!isAdmin && isPast);
+
+                const slotsObj = scheduleData[dateStr];
+                const isAllFull = defaultTimes.every(t => slotsObj[t] && slotsObj[t].reserved);
+
+                let statusTag = '<span class="status-tag tag-available">空き枠あり</span>';
+                if (isWeekend) {
+                    statusTag = '<span class="status-tag tag-closed">休業日</span>';
+                } else if (!isAdmin && isPast) {
+                    // 過ぎた平日の日はグレーアウト＆緑カラー・空き枠表示なし
+                    statusTag = '<span class="status-tag tag-past">終了</span>';
+                } else if (isAllFull) {
+                    statusTag = '<span class="status-tag tag-full">満員/予約不可</span>';
+                }
+
+                // クラス付与（管理者モードONのときは過去日もクリック可能にするためdisabledを外す）
+                const displayDisabledClass = (isWeekend || (!isAdmin && isPast)) ? 'disabled' : '';
+
+                grid.innerHTML += `
+                    <div class="cal-day ${displayDisabledClass}" onclick="onCalDayClick('${dateStr}', ${isWeekend || (!isAdmin && isPast)})">
+                        <div class="date-num">${i}</div>
+                        ${statusTag}
+                    </div>
+                `;
+            }
+        }
+
+        function renderDayTimetable() {
+            const dateObj = new Date(selectedDate);
+            const formattedDate = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日 (${dayNames[dateObj.getDay()]})`;
+            document.getElementById('selectedDateTitle').textContent = formattedDate;
+
+            const listContainer = document.getElementById('verticalSlotList');
+            listContainer.innerHTML = '';
+
+            ensureDateData(selectedDate);
+            const daySlots = scheduleData[selectedDate];
+
+            defaultTimes.forEach(timeLabel => {
+                const slotInfo = daySlots[timeLabel];
+                const isReserved = slotInfo.reserved;
+                const typeText = slotInfo.type || "リモート対応";
+
+                const card = document.createElement('div');
+                card.className = `time-slot-card ${isReserved ? 'reserved' : ''} ${isAdmin ? 'admin-clickable' : ''}`;
+                
+                if (isAdmin) {
+                    card.onclick = () => handleSlotClick(timeLabel);
+                }
+
+                let centerDisplay = isReserved ? `【${typeText}】` : "";
+                let badgeDisplay = isReserved ? (typeText === "予約不可" ? '予約不可' : '予約済み（不可）') : '予約可能';
+
+                card.innerHTML = `
+                    <div class="slot-time-label">${timeLabel}</div>
+                    <div class="slot-type-label" style="color: ${isReserved ? '#64748B' : '#0F2A4A'};">${centerDisplay}</div>
+                    <div class="slot-status-badge ${isReserved ? 'badge bg-full' : 'badge bg-free'}">
+                        ${badgeDisplay}
+                    </div>
+                `;
+
+                listContainer.appendChild(card);
+            });
+        }
+
+        function handleSlotClick(timeLabel) {
+            if (!isAdmin) return;
+
+            selectedTime = timeLabel;
+            ensureDateData(selectedDate);
+            const slotInfo = scheduleData[selectedDate][selectedTime];
+
+            const dateObj = new Date(selectedDate);
+            const dateDisplayStr = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日 ${selectedTime}`;
+            
+            document.getElementById('formDateTime').value = dateDisplayStr;
+
+            const radios = document.getElementsByName('serviceType');
+            radios.forEach(r => {
+                if (r.value === slotInfo.type) r.checked = true;
+            });
+
+            const selectEl = document.getElementById('adminStatusSelect');
+            if (!slotInfo.reserved) {
+                selectEl.value = 'available';
+            } else if (slotInfo.type === '予約不可') {
+                selectEl.value = 'unavailable';
+            } else {
+                selectEl.value = 'reserved';
+            }
+
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function handleFormSubmit() {
+            const selectedType = document.querySelector('input[name="serviceType"]:checked').value;
+            const statusSelect = document.getElementById('adminStatusSelect').value;
+
+            ensureDateData(selectedDate);
+
+            let isRes = false;
+            let finalType = selectedType;
+
+            if (statusSelect === 'available') {
+                isRes = false;
+            } else if (statusSelect === 'reserved') {
+                isRes = true;
+                if (finalType === '予約不可') finalType = 'リモート対応';
+            } else if (statusSelect === 'unavailable') {
+                isRes = true;
+                finalType = '予約不可';
+            }
+
+            if (selectedType === '予約不可') {
+                isRes = true;
+                finalType = '予約不可';
+            }
+
+            scheduleData[selectedDate][selectedTime] = {
+                reserved: isRes,
+                type: finalType
+            };
+
+            alert('スケジュール設定を更新しました。');
+            closeModalDirect();
+            renderCalendar();
+            renderDayTimetable();
+        }
+
+        function closeModal(e) {
+            if (e.target.id === 'modalOverlay') closeModalDirect();
+        }
+
+        function closeModalDirect() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCalendar();
+        });
+    </script>
+</body>
+</html>
